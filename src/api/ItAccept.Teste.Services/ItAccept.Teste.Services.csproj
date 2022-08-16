@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ItAccept.Teste.Domain\ItAccept.Teste.Domain.csproj" />
+    <ProjectReference Include="..\ItAccept.Teste.Infrastructure.Crosscutting.TokenAuth\ItAccept.Teste.Infrastructure.Crosscutting.TokenAuth.csproj" />
+  </ItemGroup>
+
+</Project>

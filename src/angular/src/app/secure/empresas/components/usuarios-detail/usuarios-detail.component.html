@@ -1,0 +1,56 @@
+<div class="modal-header border-0">
+    <h5 id="exampleModalLabel" class="modal-title txt--txt2">Adicinar Usuario</h5>
+    <button type="button" (click)="fechar()" class="close bg-transparent border-0">
+        <i class="fa-solid fa-close"></i>
+    </button>
+</div>
+<hr />
+<form *ngIf="data.UsuarioId === 'new' || (usuario$ | async)" [formGroup]="usuarioForm" autocomplete="off">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12 pb-2 mb-4">
+                <label for="" class="txt--cta-medium">Nome Usuario</label>
+                <input type="text" formControlName="NomeUsuario" class="form-control" (blur)="trim($event.target)"
+                    [ngClass]="{'is-invalid': errorMessage['NomeUsuario']}" placeholder="Digite o nome do usuario">
+                <div class="text-danger" *ngIf="errorMessage['NomeUsuario']">
+                    <i class="icon-error"></i>
+                    <span [innerHTML]="errorMessage['NomeUsuario']"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 pb-2 mb-4">
+                <label for="" class="txt--cta-medium">Username</label>
+                <input type="text" formControlName="Username" class="form-control" (blur)="trim($event.target)"
+                    [ngClass]="{'is-invalid': errorMessage['Username']}" placeholder="Digite o username">
+                <div class="text-danger" *ngIf="errorMessage['Username']">
+                    <i class="icon-error"></i>
+                    <span [innerHTML]="errorMessage['Username']"></span>
+                </div>
+            </div>
+            <div class="col-4 pb-2 mb-4">
+                <label for="" class="txt--cta-medium">Senha</label>
+                <input type="password" formControlName="Password" class="form-control" (blur)="trim($event.target)"
+                    [ngClass]="{'is-invalid': errorMessage['Password']}" placeholder="Digite o password">
+                <div class="text-danger" *ngIf="errorMessage['Password']">
+                    <i class="icon-error"></i>
+                    <span [innerHTML]="errorMessage['Password']"></span>
+                </div>
+            </div>
+            <div class="col-4 pb-2 mb-4">
+                <label for="" class="txt--cta-medium">Confirmação Senha</label>
+                <input type="password" formControlName="ConfirmPassword" class="form-control" (blur)="trim($event.target)"
+                    [ngClass]="{'is-invalid': errorMessage['ConfirmPassword']}" placeholder="Confirme a senha">
+                <div class="text-danger" *ngIf="usuarioForm.controls['ConfirmPassword'].errors?.['MatchPassword']">
+                    <i class="icon-error"></i>
+                    <span>Senhas não conferem</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer border-0 pt-4 justify-content-around">
+        <button type="button" (click)="salvar()" class="btn btn-success w-100"
+            [disabled]="!usuarioForm.valid">Salvar</button>
+    </div>
+</form>

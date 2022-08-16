@@ -1,0 +1,47 @@
+<div class="container-fluid">
+    <div class="row vh-100 justify-content-center align-content-center">
+        <div class="col-12 col-md-6 col-lg-4 mt-5">
+            <div class="card">
+                <div class="card-header"><b>Login</b></div>
+
+                <div class="card-body">
+                    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="autenticar()" autocomplete="off">
+
+                        <div class="col-12 mb-3">
+                            <input type="text" placeholder="Username" formControlName="Username"
+                                class="form-control bg-white border" [ngClass]="{'is-invalid': errorMessage['Username'] }">
+                            <div class="text-danger" *ngIf="errorMessage['Username']">
+                                <i class="icon-error"></i>
+                                <span [innerHTML]="errorMessage['Username']"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <input type="password" placeholder="Senha" formControlName="Password"
+                                class="form-control bg-white border"
+                                [ngClass]="{'is-invalid': errorMessage['Password'] }">
+                            <div class="text-danger" *ngIf="errorMessage['Password']">
+                                <i class="icon-error"></i>
+                                <span [innerHTML]="errorMessage['Password']"></span>
+                            </div>
+                        </div>
+
+                        <div class="row ">
+
+                            <div *ngIf="error" class="text-danger">
+                                <i class="icon-error"></i>
+                                Login ou senha inválidos
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center mx-1">
+                            <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid">Login</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

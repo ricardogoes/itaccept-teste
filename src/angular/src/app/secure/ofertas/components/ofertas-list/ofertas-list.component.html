@@ -1,0 +1,6 @@
+<section class="container mt-3">
+    <h2>Ofertas</h2>
+    <hr />
+    <itaccept-ofertas-list-embarcadora *ngIf="usuarioLogado.TipoEmpresa === 'Embarcadora'"></itaccept-ofertas-list-embarcadora>
+    <itaccept-ofertas-list-transportadora *ngIf="usuarioLogado.TipoEmpresa === 'Transportadora'"></itaccept-ofertas-list-transportadora>
+</section>

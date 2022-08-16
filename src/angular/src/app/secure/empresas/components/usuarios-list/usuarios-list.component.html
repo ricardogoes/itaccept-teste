@@ -1,0 +1,72 @@
+<section class="container mt-3">
+    <div class="modal-header border-0">
+        <h5 id="exampleModalLabel" class="modal-title txt--txt2">Usuários</h5>
+        <button type="button" (click)="fechar()" class="close bg-transparent border-0">
+            <i class="fa-solid fa-close"></i>
+        </button>
+    </div>
+    <hr />
+    <div class="modal-body">
+        <div class="btn-toolbar justify-content-between my-3">
+            <div class="mr-3">
+                <button type="button" class="btn btn-success" (click)="abrirDetalhes('new')">Adicionar novo</button>
+            </div>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <button class="btn btn-outline-secondary" [ngClass]="filtroDataSource === 'todos' ? 'active' : ''"
+                    (click)="filtrarDataSource('todos')">Todos</button>
+                <button class="btn btn-outline-secondary" [ngClass]="filtroDataSource === 'ativos' ? 'active' : ''"
+                    (click)="filtrarDataSource('ativos')">Ativos</button>
+                <button class="btn btn-outline-secondary" [ngClass]="filtroDataSource === 'arquivados' ? 'active' : ''"
+                    (click)="filtrarDataSource('arquivados')">Arquivados</button>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-12">
+                <input type="text" class="form-control search bg-transparent" placeholder="Pesquisar"
+                    (keyup)="aplicarFiltro($any($event.target).value)"
+                    [disabled]="(dataSource!.data!.length === 0 && dataSource!.filteredData!.length === 0) || dataSource.filterPredicate !== defaultFilterPredicate">
+            </div>
+        </div>
+        <div *ngIf="(usuarios$ | async) && dataSource!.filteredData!.length > 0" class="row">
+            <table class="tabela" mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="NomeUsuario">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="pb-3 text-start text-secondary">
+                        <strong>Nome</strong> </th>
+                    <td mat-cell *matCellDef="let element; let row" [ngClass]="{'make-disable': !row.Status}">
+                        <p class="m-0">{{element.NomeUsuario}}</p>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="Status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="pb-3 text-start text-secondary">
+                        <strong>Status</strong>
+                    </th>
+                    <td mat-cell *matCellDef="let element; let row" [ngClass]="{'make-disable': !row.Status}">
+                        <p class="m-0">{{element.Status | status}}</p>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="Acoes">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let row" class="text-end">
+                        <button *ngIf="row.Status" class="btn btn-menu-principal" type="button"
+                            matTooltip="Editar empresa" matTooltipClass="mat-tooltip-color"
+                            (click)="abrirDetalhes(row.UsuarioId)">
+                            <i class="fa-solid fa-pencil"></i>
+                        </button>
+                        <button *ngIf="row.Status" class="btn btn-menu-principal" type="button" matTooltip="Arquivar"
+                            matTooltipClass="mat-tooltip-color" (click)="atualizarStatus(row)">
+                            <i class="fa-solid fa-ban"></i>
+                        </button>
+                        <button *ngIf="!row.Status" class="btn btn-menu-principal" type="button"
+                            matTooltip="Desarquivar" matTooltipClass="mat-tooltip-color" (click)="atualizarStatus(row)">
+                            <i class="fa-solid fa-check-circle"></i>
+                        </button>
+
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+                <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
+            </table>
+        </div>
+        <mat-paginator [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
+    </div>
+</section>

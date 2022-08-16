@@ -1,0 +1,55 @@
+version: '3'
+
+services: 
+
+  angular:
+    build: 
+      context: ./src/angular
+      dockerfile: Dockerfile
+    container_name: angular
+    networks: 
+      - node-network
+    tty: true
+    ports: 
+      - "80:80"
+    depends_on:
+      - api
+
+  api:
+    build: 
+      context: ./src/api
+      dockerfile: Dockerfile
+    container_name: api
+    networks: 
+      - node-network
+    tty: true
+    ports: 
+      - "5001:5001"
+    depends_on:
+      - db
+  
+  db:
+    image: mysql:5.7
+    container_name: db
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    tty: true
+    environment: 
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: itaccept_teste
+      MYSQL_USER: itaccept
+      MYSQL_PASSWORD: itaccept123
+      MYSQL_TCP_PORT: 3307
+    volumes: 
+      - ./db/init:/docker-entrypoint-initdb.d
+      - ./db/mysql:/var/lib/mysql
+    ports:
+      - "3307:3307"
+    expose:
+      - 3307
+    networks: 
+      - node-network
+
+networks: 
+  node-network:
+    driver: bridge     

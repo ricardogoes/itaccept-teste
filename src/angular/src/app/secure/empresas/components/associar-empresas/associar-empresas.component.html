@@ -1,0 +1,46 @@
+<section *ngIf="data$ | async">
+    <div class="modal-header border-0">
+        <h5 id="exampleModalLabel" class="modal-title txt--txt2">Associar empresas</h5>
+        <button type="button" (click)="fechar()" class="close bg-transparent border-0">
+            <i class="fa-solid fa-close"></i>
+        </button>
+    </div>
+    <hr />
+    <div class="modal-body">
+        <div class="row mb-4">
+            <div class="col-12 col-lg-12">
+                <input type="text" class="rounded-pill form-control search bg-transparent" placeholder="Pesquisar"
+                    (keyup)="aplicarFiltro($any($event.target).value)" />
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-12 col-lg-4 pb-3">
+                <button type="button" class="btn btn-tertiary w-100"
+                    [ngClass]="filtroDataSource === 'todos' ? 'active' : ''"
+                    (click)="filtrarDataSource('todos')">Todos</button>
+            </div>
+            <div class="col-12 col-lg-4 pb-3">
+                <button type="button" class="btn btn-tertiary w-100"
+                    [ngClass]="filtroDataSource === 'associados' ? 'active' : ''"
+                    (click)="filtrarDataSource('associados')">Associados</button>
+            </div>
+            <div class="col-12 col-lg-4 pb-3">
+                <button type="button" class="btn btn-tertiary w-100"
+                    [ngClass]="filtroDataSource === 'nao-associados' ? 'active' : ''"
+                    (click)="filtrarDataSource('nao-associados')">Não associados</button>
+            </div>
+        </div>
+        <div class="row mb-2 mr-3" *ngFor="let empresa of empresasFiltradas; trackBy:recognize">
+            <div class="col-11">
+                <span><b>{{empresa.NomeEmpresa}}</b></span>
+            </div>
+            <div class="col-1">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                        [checked]="usuarioEstaAssociadoAoCliente(empresa)"
+                        (change)="associarEmpresa(empresa, $any($event.target).checked)">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

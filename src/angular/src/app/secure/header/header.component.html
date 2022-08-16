@@ -1,0 +1,21 @@
+<div class="container-fluid p-0">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">&nbsp;IT Accept Teste</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li *ngIf="usuarioLogado.TipoUsuario !== 'Admin'" class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" routerLink="ofertas">Ofertas</a>
+                </li>
+                <li *ngIf="usuarioLogado.TipoUsuario !== 'Admin' && usuarioLogado.TipoEmpresa === 'Embarcadora'"
+                    class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" routerLink="produtos">Produtos</a>
+                </li>
+            </ul>
+        </div>
+        <button class="btn btn-dark mr-auto" type="button" (click)="sair()">Sair</button>
+    </nav>
+</div>
